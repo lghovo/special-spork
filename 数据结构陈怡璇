@@ -1,0 +1,56 @@
+1. 
+def getParent(i):
+    if i == 0:
+        return -1
+    return (i-1)//2
+
+def getLeftChild(i):
+    return (i*2) + 1
+
+def getRightChild(i):
+    return (i*2) + 2
+
+2. 
+class PriorityQueue:
+
+    def __init__(self):
+        self.head = None
+        self.size = 0
+        
+    def insert(self, key):
+        node = Node(key)
+        if self.head is None:
+            self.head = node
+            self.size += 1
+        else:
+            # traverse the list to find the node before the insertion
+            curr = self.head
+            prev = None
+            while curr is not None:
+                if node.key < curr.key:
+                    break
+                prev = curr
+                curr = curr.next
+            # insert the node
+            if prev is None: # insert at head
+                node.next = self.head
+                self.head = node
+            else:
+                node.next = prev.next
+                prev.next = node
+            self.size += 1
+            
+    def delMin(self):
+        if self.head is None:
+            return
+        min_node = self.head
+        prev = None
+        while min_node.next is not None:
+            min_node = min_node.next
+            prev = min_node
+        if prev is None:
+            self.head = None
+        else:
+            prev.next = None
+        self.size -= 1
+        return min_node.key
